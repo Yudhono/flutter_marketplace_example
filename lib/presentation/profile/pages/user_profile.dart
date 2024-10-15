@@ -12,6 +12,9 @@ class UserProfilePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => UserProfileCubit()..getUserProfile(),
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('My Profile'),
+        ),
         body: Center(
           child: BlocBuilder<UserProfileCubit, UserProfileState>(
             builder: (context, state) {
@@ -31,12 +34,44 @@ class UserProfilePage extends StatelessWidget {
   }
 
   Widget _userProfileDetail(UserProfileEntity userProfile) {
-    return Column(
-      children: [
-        Text(userProfile.name ?? 'No name available'),
-        Text(userProfile.email ?? 'No email available'),
-        Text(userProfile.role ?? 'No role available'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(
+                    userProfile.avatar ?? 'https://via.placeholder.com/150'),
+              ),
+              const SizedBox(
+                  width: 25), // Add some spacing between the avatar and text
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Name: ${userProfile.name}' ?? 'No name available',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      )),
+                  Text(
+                    'Email: ${userProfile.email}' ?? 'No email available',
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
