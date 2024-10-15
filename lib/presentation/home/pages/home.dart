@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_marketplace_example/presentation/profile/pages/user_profile.dart';
+import 'package:flutter_marketplace_example/presentation/products/pages/products.dart'; // Import the ProductsPage
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,7 +25,18 @@ class _HomePageState extends State<HomePage> {
               );
             },
             icon: const Icon(Icons.person),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ProductsPage()), // Navigate to ProductsPage
+              );
+            },
+            icon: const Icon(Icons.shopping_cart),
+          ),
         ],
       ),
       body: Center(
