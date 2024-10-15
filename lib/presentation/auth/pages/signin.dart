@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_marketplace_example/common/helpers/shared_preferences_helper.dart';
 import 'package:flutter_marketplace_example/data/models/auth/user_signin_request.dart';
 import 'package:flutter_marketplace_example/domain/usecases/auth/signin.dart';
+import 'package:flutter_marketplace_example/presentation/profile/pages/user_profile.dart';
 import 'package:flutter_marketplace_example/service_locator.dart';
 
 class SigninPage extends StatefulWidget {
@@ -38,13 +39,12 @@ class _SigninPageState extends State<SigninPage> {
                 print('result isRight: ${result.isRight()}');
                 print('result isLeft: ${result.isLeft()}');
                 if (result.isRight()) {
-                  final sharedPreferencesHelper = sl<SharedPreferencesHelper>();
-                  final accessToken =
-                      await sharedPreferencesHelper.getAccessToken();
-                  final refreshToken =
-                      await sharedPreferencesHelper.getRefreshToken();
-                  print('Access Token: $accessToken');
-                  print('Refresh Token: $refreshToken');
+                  // Navigate to profile page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UserProfilePage()),
+                  );
                 } else {
                   // Show error message
                 }
