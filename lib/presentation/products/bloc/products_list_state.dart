@@ -6,12 +6,13 @@ class ProductsListLoading extends ProductsListState {}
 
 class ProductsListLoaded extends ProductsListState {
   final List<ProductEntity> products;
+  final bool isLoadingNextPage;
 
-  ProductsListLoaded(this.products);
+  ProductsListLoaded(this.products, {this.isLoadingNextPage = false});
 }
 
 class ProductsListLoadFailed extends ProductsListState {
-  final String message;
+  final String error;
 
-  ProductsListLoadFailed(this.message);
+  ProductsListLoadFailed(this.error);
 }

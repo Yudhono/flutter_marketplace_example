@@ -3,43 +3,40 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_marketplace_example/presentation/products/bloc/products_list_cubit.dart';
 import 'package:flutter_marketplace_example/presentation/products/bloc/products_list_state.dart';
 
-class ProductsPage extends StatefulWidget {
+class ProductsListPage extends StatefulWidget {
   @override
-  _ProductsPageState createState() => _ProductsPageState();
+  _ProductsListPageState createState() => _ProductsListPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> {
+class _ProductsListPageState extends State<ProductsListPage> {
   final ScrollController _scrollController = ScrollController();
-  int _offset = 0;
-  final int _limit = 10;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _fetchProducts();
-  }
-
-  void _fetchProducts() {
-    context
-        .read<ProductsListCubit>()
-        .getProducts(offset: _offset, limit: _limit);
+    context.read<ProductsListCubit>().getProducts(); // Initial load
   }
 
   void _onScroll() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      setState(() {
-        _offset += _limit;
-      });
-      _fetchProducts();
+      final currentState = context.read<ProductsListCubit>().state;
+      if (currentState is ProductsListLoaded &&
+          !currentState.isLoadingNextPage) {
+        context
+            .read<ProductsListCubit>()
+            .getProducts(offset: currentState.products.length);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Products')),
+      appBar: AppBar(
+        title: const Text('Products List'),
+      ),
       body: BlocBuilder<ProductsListCubit, ProductsListState>(
         builder: (context, state) {
           if (state is ProductsListLoading) {
@@ -47,8 +44,21 @@ class _ProductsPageState extends State<ProductsPage> {
           } else if (state is ProductsListLoaded) {
             return ListView.builder(
               controller: _scrollController,
-              itemCount: state.products.length,
+              itemCount:
+                  state.products.length + (state.isLoadingNextPage ? 1 : 0),
               itemBuilder: (context, index) {
+                if (index == state.products.length) {
+                  return const Center(
+                      child: Column(
+                    children: [
+                      CircularProgressIndicator(),
+                      Text('Loading more products...'),
+                      SizedBox(
+                        height: 20,
+                      )
+                    ],
+                  ));
+                }
                 final product = state.products[index];
                 return ListTile(
                   title: Text(product.title ?? 'No Title'),
@@ -57,9 +67,10 @@ class _ProductsPageState extends State<ProductsPage> {
               },
             );
           } else if (state is ProductsListLoadFailed) {
-            return Center(child: Text(state.message));
+            return Center(
+                child: Text('Failed to load products: ${state.error}'));
           }
-          return const SizedBox();
+          return Container();
         },
       ),
     );

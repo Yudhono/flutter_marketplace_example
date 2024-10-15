@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        ProductsPage()), // Navigate to ProductsPage
+                        ProductsListPage()), // Navigate to ProductsPage
               );
             },
             icon: const Icon(Icons.shopping_cart),
