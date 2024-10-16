@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_marketplace_example/presentation/products/bloc/products_list_cubit.dart';
-import 'package:flutter_marketplace_example/presentation/products/bloc/products_list_state.dart';
+import 'package:flutter_marketplace_example/presentation/home/widgets/products_list/bloc/products_list_cubit.dart';
+import 'package:flutter_marketplace_example/presentation/home/widgets/products_list/bloc/products_list_state.dart';
 
-class ProductsListPage extends StatefulWidget {
+class ProductsListWidget extends StatefulWidget {
   @override
-  _ProductsListPageState createState() => _ProductsListPageState();
+  _ProductsListWidgetState createState() => _ProductsListWidgetState();
 }
 
-class _ProductsListPageState extends State<ProductsListPage> {
+class _ProductsListWidgetState extends State<ProductsListWidget> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -34,9 +34,6 @@ class _ProductsListPageState extends State<ProductsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Products List'),
-      ),
       body: BlocBuilder<ProductsListCubit, ProductsListState>(
         builder: (context, state) {
           if (state is ProductsListLoading) {

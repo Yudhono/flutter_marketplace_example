@@ -1,5 +1,5 @@
 import 'package:flutter_marketplace_example/domain/entities/products/products_entity.dart';
-import 'package:flutter_marketplace_example/presentation/products/bloc/products_list_state.dart';
+import 'package:flutter_marketplace_example/presentation/home/widgets/products_list/bloc/products_list_state.dart';
 import 'package:flutter_marketplace_example/service_locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_marketplace_example/domain/usecases/products/products_usecase.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_marketplace_example/presentation/profile/pages/user_profile.dart';
-import 'package:flutter_marketplace_example/presentation/products/pages/products.dart'; // Import the ProductsPage
+import 'package:flutter_marketplace_example/presentation/home/widgets/products_list/products.dart'; // Import the ProductsPage
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,20 +27,20 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.person),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ProductsListPage()), // Navigate to ProductsPage
-              );
-            },
+            onPressed: () {},
             icon: const Icon(Icons.shopping_cart),
           ),
         ],
       ),
       body: Center(
-        child: Text('Home Page'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: ProductsListWidget(),
+            ),
+          ],
+        ),
       ),
     );
   }
