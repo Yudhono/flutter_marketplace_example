@@ -6,6 +6,8 @@ import 'dart:convert';
 abstract class GetListProductsService {
   Future<Either<String, List<ProductModel>>> getProducts(
       {int offset, int limit});
+
+  Future<Either<String, ProductModel>> getProductById(int id);
 }
 
 class GetListProductsServiceImpl implements GetListProductsService {
@@ -25,6 +27,25 @@ class GetListProductsServiceImpl implements GetListProductsService {
         return Right(products);
       } else {
         return Left('Failed to fetch products: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      return Left('An error occurred: $e');
+    }
+  }
+
+  @override
+  Future<Either<String, ProductModel>> getProductById(int id) async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://api.escuelajs.co/api/v1/products/$id'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final product = ProductModel.fromJson(data);
+        return Right(product);
+      } else {
+        return Left('Failed to fetch product: ${response.reasonPhrase}');
       }
     } catch (e) {
       return Left('An error occurred: $e');

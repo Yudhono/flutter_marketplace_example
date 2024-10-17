@@ -14,4 +14,11 @@ class ProductRepositoryImplementation extends ProductRepository {
     return result.map((productModels) =>
         productModels.map((model) => model.toEntity()).toList());
   }
+
+  @override
+  Future<Either<String, ProductEntity>> getProductById(int id) async {
+    final result = await sl<GetListProductsService>().getProductById(id);
+
+    return result.map((productModel) => productModel.toEntity());
+  }
 }

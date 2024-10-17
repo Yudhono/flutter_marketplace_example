@@ -4,6 +4,7 @@ import 'package:flutter_marketplace_example/common/helpers/add_dot_after_charact
 import 'package:flutter_marketplace_example/domain/entities/products/products_entity.dart';
 import 'package:flutter_marketplace_example/presentation/home/widgets/products_list/bloc/products_list_cubit.dart';
 import 'package:flutter_marketplace_example/presentation/home/widgets/products_list/bloc/products_list_state.dart';
+import 'package:flutter_marketplace_example/presentation/products/product_detail/page/product_detail.dart';
 
 class ProductsListWidget extends StatefulWidget {
   @override
@@ -84,47 +85,57 @@ class _ProductsListWidgetState extends State<ProductsListWidget> {
   }
 
   Widget _productItemsTile(ProductEntity product) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.network(
-            product.images!.first,
-            fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetail(id: product.id!),
           ),
-          const SizedBox(height: 5),
-          Text(
-            addDotAfterCharacters(product.title ?? 'No Title', 32),
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.network(
+              product.images!.first,
+              fit: BoxFit.cover,
             ),
-            textAlign: TextAlign.left,
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                '\$ ${product.price}',
-                style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
+            const SizedBox(height: 5),
+            Text(
+              addDotAfterCharacters(product.title ?? 'No Title', 32),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('Add to Cart'),
+              textAlign: TextAlign.left,
             ),
-          ),
-        ],
+            const SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '\$ ${product.price}',
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Add to Cart'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

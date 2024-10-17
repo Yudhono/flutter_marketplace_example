@@ -4,4 +4,6 @@ import 'package:flutter_marketplace_example/domain/entities/products/products_en
 abstract class ProductRepository {
   Future<Either<String, List<ProductEntity>>> getProducts(
       {int offset, int limit});
+
+  Future<Either<String, ProductEntity>> getProductById(int id);
 }

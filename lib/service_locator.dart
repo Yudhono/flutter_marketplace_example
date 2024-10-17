@@ -11,6 +11,7 @@ import 'package:flutter_marketplace_example/domain/repository/auth/token_retriev
 import 'package:flutter_marketplace_example/domain/repository/products/product_repository.dart';
 import 'package:flutter_marketplace_example/domain/repository/user_profile/user_profile_repository.dart';
 import 'package:flutter_marketplace_example/domain/usecases/auth/signin.dart';
+import 'package:flutter_marketplace_example/domain/usecases/products/get_one_product_usecase.dart';
 import 'package:flutter_marketplace_example/domain/usecases/products/products_usecase.dart';
 import 'package:flutter_marketplace_example/domain/usecases/user_profile/get_user_profile_usecase.dart';
 import 'package:get_it/get_it.dart';
@@ -48,4 +49,6 @@ Future<void> initializeDependencies() async {
       () => ProductRepositoryImplementation());
 
   sl.registerLazySingleton<GetProductsUsecase>(() => GetProductsUsecase());
+
+  sl.registerLazySingleton<GetOneProductUsecase>(() => GetOneProductUsecase());
 }
